@@ -73,7 +73,7 @@ public class Processor {
   */
   private void formatCategory(JsonObject category) {
     JsonArray categoryArray = category.getJsonArray("Topics");
-    if (categoryArray.size() > 1) {
+    if (categoryArray.size() > 0) {
       String heading = "  * Category: "  + category.get("Name").toString();
       System.out.println(heading);
       //recursive process
