@@ -69,7 +69,7 @@ public class Processor {
   * @throws JsonParsingException in event the json file is invalid
   */
   private void formatCategory(JsonObject category) {
-    String heading = "   * Category: "  + category.get("Name").toString();
+    String heading = "  * Category: "  + category.get("Name").toString();
     System.out.println(heading);
     //recursive process
     formatTopic(category.getJsonArray("Topics"), 2);
