@@ -1,12 +1,12 @@
 import java.io.IOException;
 import javax.json.stream.JsonParsingException;
 /**
-* Takes in Json in file and formats it for output
+* Takes in Json in file and formats it for output.
 */
 public class Describe {
 
   /**
-  * Executes the program formatting the json file for ouptut
+  * Executes the program formatting the json file for ouptut.
   *
   * @param args the name of the file.
   */
@@ -16,7 +16,7 @@ public class Describe {
   }
 
   /**
-  * Executes the program formatting the json file for ouptut
+  * Executes the program formatting the json file for ouptut.
   *
   * @param args the name of the file.
   */
@@ -33,7 +33,7 @@ public class Describe {
       System.out.println("FileNotFound");
     }
     catch (JsonParsingException e) {
-      System.out.println("Invalid JSON String");
+      System.out.println("Not a valid JSON string!");
     }
   }
 }

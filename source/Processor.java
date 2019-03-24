@@ -1,7 +1,8 @@
 import java.io.IOException;
 import java.io.FileReader;
 import java.io.StringReader;
-import javax.json.*;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
 import javax.json.stream.JsonParsingException;
 
 /**
@@ -69,10 +70,13 @@ public class Processor {
   * @throws JsonParsingException in event the json file is invalid
   */
   private void formatCategory(JsonObject category) {
-    String heading = "  * Category: "  + category.get("Name").toString();
-    System.out.println(heading);
-    //recursive process
-    formatTopic(category.getJsonArray("Topics"), 2);
+    JsonArray categoryArray = category.getJsonArray("Topics");
+    if (categoryArray.size() > 1) {
+      String heading = "  * Category: "  + category.get("Name").toString();
+      System.out.println(heading);
+      //recursive process
+      formatTopic(categoryArray, 2);
+    }
   }
 
   /**

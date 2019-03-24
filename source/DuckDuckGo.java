@@ -38,7 +38,7 @@ public class DuckDuckGo {
       System.out.println("FileNotFound");
     }
     catch (JsonParsingException e) {
-      System.out.println("Invalid JSON String");
+      System.out.println("Not a valid JSON string!");
     }
   }
 
@@ -46,6 +46,7 @@ public class DuckDuckGo {
   * Converts the search parameter into valid api query.
   *
   * @param searchParameter the search parameter being queried
+  * @return query url
   */
   public String createURL(String searchParameter) {
     final String head = "https://api.duckduckgo.com/?q=";
