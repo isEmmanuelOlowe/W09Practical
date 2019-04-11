@@ -42,12 +42,18 @@ public class Processor {
   public void format() throws JsonParsingException, FileNotFoundException {
     JsonObject mainObject = reader.readObject();
     String heading = mainObject.get("Heading").toString();
-    String head = heading + " can refer to:";
     writer = new PrintWriter(heading + ".html");
-    writer.write("<h1>" + head + "</h1>");
-    //prints all the related topics
-    JsonArray topics = mainObject.getJsonArray("RelatedTopics");
-    formatTopic(topics, 1);
+    if (heading.isEmpty()) {
+      writer.write("<h1>No Search Results Found</h1>");
+    }
+    else {
+
+      String head = heading + " can refer to:";
+      writer.write("<h1>" + head + "</h1>");
+      //prints all the related topics
+      JsonArray topics = mainObject.getJsonArray("RelatedTopics");
+      formatTopic(topics, 1);
+    }
     writer.close();
   }
 

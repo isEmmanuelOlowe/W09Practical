@@ -91,6 +91,8 @@ The `printText` method was created into its of method as it is a process that wo
 
 It was decided for all the methods of processor to just throw errors instead of catch them within the class as to reduce the amount of try catches within the class and allow them to be caught in just one try catch block at the highest level e.g. `Describe` and `DuckDuckGo`.
 
+Though not mentioned by the specification there are results which do not return results. When this is the case the heading is always empty so the processor class will always check that there is a heading before continuing to process `JSON`.
+
 ### Extension: HTML
 
 The structure of the practical remained identical to the initial practical. The original code for the practical was modified instead of outputting the terminal the output was enclosed in html tags and outputted to a file with the name of the search parameter with html extension. Additional data was taken from the `json` data e.g. the search link for related topics and also the images if the topic contained any.
@@ -109,7 +111,130 @@ When searched the Wikipedia API returns all the data in `Json` arrays so in stea
 
 ## Testing
 
+### Stacscheck
 
+![](tests/stacscheck/stacscheck.png)
+
+### Test Case 1:
+
+When there is no search results found to the API
+
+#### Input
+
+From source directory
+
+```bash
+java -cp "javax.json-1.0.jar:." DuckDuckGo "Terminator Broken"
+```
+
+#### API Output
+
+![](tests/source/broken api.png)
+
+#### Program Output
+
+![](tests/source/broken.png)
+
+
+
+### Test Case 2:
+
+Since it has been established by the `stacscheck` that the program formats data with correct styling it shall be check that the program data matches and parses API data.
+
+### Input
+
+```bash  
+java -cp "javax.json-1.0.jar:." DuckDuckGo Beethoven
+```
+
+#### API Output
+
+<https://api.duckduckgo.com/?q=beethoven&format=json&pretty=1>
+
+![](tests/source/beethoven api.png)
+
+#### Program Output
+
+As can be seen all `json` data has been used and formatted by the program
+
+![](/cs/home/eo32/Documents/CS1003/Practicals/W09Practical/tests/source/beethoven.png)
+
+### Extension: HTML
+
+To test this extension it was shown that all the data present in the initial practical was present in the html and as can be seen this is true
+
+#### Input
+
+```bash
+java -cp "javax.json-1.0.jar:." DuckDuckGo Beethoven
+```
+
+#### HTML Output
+
+![](/cs/home/eo32/Documents/CS1003/Practicals/W09Practical/tests/ex-html/beethoven.png)
+
+### Extension: XML
+
+To test the XML it was decided to check whether it produced the identical output as initial practical. The following bash script was created and used.
+
+```bash
+#!/bin/bash
+
+cd source
+javac -cp "javax.json-1.0.jar:." *.java
+j1="$(java -cp javax.json-1.0.jar:. DuckDuckGo 'Swim' 2>&1 )"
+j2="$(java -cp javax.json-1.0.jar:. DuckDuckGo 'Spider' 2>&1 )"
+j3="$(java -cp javax.json-1.0.jar:. DuckDuckGo 'Dave' 2>&1 )"
+
+cd ../ex-xml
+javac -cp "javax.xml-1.3.4.jar:." *.java
+w1="$(java -cp javax.xml-1.3.4.jar:. DuckDuckGo 'Swim' 2>&1 )"
+w2="$(java -cp javax.xml-1.3.4.jar:. DuckDuckGo 'Spider' 2>&1 )"
+w3="$(java -cp javax.xml-1.3.4.jar:. DuckDuckGo 'Dave' 2>&1 )"
+
+if [ "$j1" == "$w1" ]; then
+  echo "Swim test successful"
+else
+  echo "Swim test failed"
+fi
+
+if [ "$j2" == "$w2" ]; then
+  echo "Spider test successful"
+else
+  echo "Spider test failed"
+fi
+
+if [ "$j3" == "$w3" ]; then
+
+  echo "Dave test successful"
+else
+  echo "Dave test failed"
+fi
+```
+
+Navigate to root directory of the project and run
+
+```bash
+bash xml_test.sh
+```
+
+#### Output
+
+![](tests/ex-xml/output.png)
+
+### Extension: Wikipedia
+
+Since the API works in the same manner as initial it can be seen that it does indeed properly send the correct requests out to the API. To see if the program works we just need to navigate to the expected address the program will gain the data from and compare that to the output
+
+#### API Output
+
+![](tests/ex-wikipedia/spiderman api.png)
+
+#### Output
+
+As can be seen all the API data has been used and processed the data from the expected source
+
+![](tests/ex-wikipedia/spider-man.png)
 
 ## Evaluation
 
@@ -119,9 +244,9 @@ Since the same class is responsible for input or `json` data for both Part 1 and
 
 ## Conclusion
 
-In this practical a program capable of formatting `json` data into a specified format was created, this program was also capable of interacting with DuckDuckGo API and retrieving the data produced from queries to the API.
+In this practical a program capable of formatting `json` data into a specified format was created, this program was also capable of interacting with `DuckDuckGo` API and retrieving the dajava -cp "ta produced from queries to the API.
 
-`git` was used for version control for this project.
+`git` was used for version control for this project. From previous feedback it has been seen that use of git for displaying extension made program difficult to mark so it was not used to access extensions for this practical.
 
 ### Difficulties
 

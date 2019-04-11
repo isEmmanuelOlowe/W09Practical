@@ -39,11 +39,16 @@ public class Processor {
   public void format() throws JsonParsingException {
     JsonObject mainObject = reader.readObject();
     String heading = mainObject.get("Heading").toString();
-    String head = heading + " can refer to:";
-    System.out.println(head);
-    //prints all the related topics
-    JsonArray topics = mainObject.getJsonArray("RelatedTopics");
-    formatTopic(topics, 1);
+    if (heading.isEmpty()) clear{
+      System.out.println("No Search Results Found");
+    }
+    else {
+      String head = heading + " can refer to:";
+      System.out.println(head);
+      //prints all the related topics
+      JsonArray topics = mainObject.getJsonArray("RelatedTopics");
+      formatTopic(topics, 1);
+    }
   }
 
   /**

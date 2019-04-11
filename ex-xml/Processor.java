@@ -32,12 +32,17 @@ public class Processor {
   public void format() {
     //There is only one tag with the name Heading so must be the 1st index
     String heading = reader.getElementsByTagName("Heading").item(0).getTextContent();
-    String head = heading + " can refer to:";
-    System.out.println(head);
-    //only one index with the name RelatedTopics so must be the 1st index
-    //prints all the related topics
-    Node relatedTopics = reader.getElementsByTagName("RelatedTopics").item(0);
-    formatTopic(relatedTopics, 1);
+    if (heading.isEmpty()) {
+      System.out.println("No Search Results Found.");
+    }
+    else {
+      String head = heading + " can refer to:";
+      System.out.println(head);
+      //only one index with the name RelatedTopics so must be the 1st index
+      //prints all the related topics
+      Node relatedTopics = reader.getElementsByTagName("RelatedTopics").item(0);
+      formatTopic(relatedTopics, 1);
+    }
   }
 
   /**

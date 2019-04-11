@@ -14,13 +14,18 @@ import java.net.URL;
  * the server at the specified URL, and the Java client.
  */
 public class RESTClient {
-	
+
     /**
-     * Return a String representation of the returned data from a REST call to a specified URL
-     */
+    *
+    * Return a String representation of the returned data from a REST call to a specified URL.
+    * @param strURL api url
+    * @return data gathered from api call
+    * @throws MalformedURLException invalid url
+    * @throws IOException inpu/output error
+    */
     public String makeRESTCall(String strURL) throws MalformedURLException, IOException {
         URL url = new URL(strURL);
-        
+
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         //Specify that we are expecting JSON data to be returned
         conn.setRequestMethod("GET");
@@ -41,9 +46,10 @@ public class RESTClient {
         // }
         // System.out.println("---End of headers---");
 
-        // 200 is the 'OK' response code. This method may also return 401 for an unauthorised request, 
+        // 200 is the 'OK' response code. This method may also return 401 for an unauthorised request,
         // or -1 if the response is not valid HTTP
-        if (conn.getResponseCode() != 200) {
+        final int okayResponse = 200;
+        if (conn.getResponseCode() != okayResponse) {
             throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
         }
 
@@ -57,7 +63,6 @@ public class RESTClient {
             buffer.append(output);
         }
         conn.disconnect();
-        
         // System.out.println(buffer.toString());
         return buffer.toString();
     }
