@@ -1,6 +1,4 @@
 import java.io.IOException;
-import javax.json.stream.JsonParsingException;
-
 /**
 * Interacts with DuckDuckGo Api and formats output.
 */
@@ -27,19 +25,20 @@ public class DuckDuckGo {
       RESTClient api = new RESTClient();
       String searchParameter = args[0];
       String url = createURL(searchParameter);
-      String jsonData = api.makeRESTCall(url);
-      Processor processor = new Processor(jsonData, false);
+      String xmlData = api.makeRESTCall(url);
+      Processor processor = new Processor(xmlData, false);
       processor.format();
     }
     catch (ArrayIndexOutOfBoundsException e) {
       System.out.println("Insufficient Arguments");
     }
-    catch (IOException e) {
-      System.out.println("FileNotFound");
+    catch (Exception e) {
+      System.out.println("Here");
+      e.printStackTrace();
     }
-    catch (JsonParsingException e) {
-      System.out.println("Not a valid JSON string!");
-    }
+    // catch (JsonParsingException e) {
+    //   System.out.println("Not a valid JSON string!");
+    // }
   }
 
   /**
@@ -50,7 +49,7 @@ public class DuckDuckGo {
   */
   public String createURL(String searchParameter) {
     final String head = "https://api.duckduckgo.com/?q=";
-    final String footer = "&format=json";
+    final String footer = "&format=xml";
     final String url = head + "'" + searchParameter + "'" + footer;
     return url;
   }

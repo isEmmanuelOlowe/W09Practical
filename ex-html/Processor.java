@@ -6,13 +6,16 @@ import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.json.Json;
 import javax.json.stream.JsonParsingException;
-
+import java.io.PrintWriter;
+import java.io.FileNotFoundException;
 /**
-* Process Json data into a format in which it can be formated for ouput to user.
+* Process Json data into a format in which it can be formated for ouput to HTML Document.
 */
 public class Processor {
 
   private JsonReader reader;
+  //for writng html data to a file
+  private PrintWriter writer;
 
   /**
   * Takes in the file that will be formatted.
@@ -32,18 +35,20 @@ public class Processor {
   }
 
   /**
-  * formats and outputs the json data in to text format.
+  * formats and outputs the json data in to html format.
   *
   * @throws JsonParsingException in event the json file is invalid.
   */
-  public void format() throws JsonParsingException {
+  public void format() throws JsonParsingException, FileNotFoundException {
     JsonObject mainObject = reader.readObject();
     String heading = mainObject.get("Heading").toString();
     String head = heading + " can refer to:";
-    System.out.println(head);
+    writer = new PrintWriter(heading + ".html");
+    writer.write("<h1>" + head + "</h1>");
     //prints all the related topics
     JsonArray topics = mainObject.getJsonArray("RelatedTopics");
     formatTopic(topics, 1);
+    writer.close();
   }
 
   /**
@@ -67,7 +72,7 @@ public class Processor {
   }
 
   /**
-  * formats a category object to be output to screen.
+  * formats a category object to be output to html.
   *
   * @param category the category object that will be formatted
   * @throws JsonParsingException in event the json file is invalid
@@ -76,8 +81,8 @@ public class Processor {
     JsonArray categoryArray = category.getJsonArray("Topics");
     //checks the category is not empty
     if (categoryArray.size() > 0) {
-      String heading = "  * Category: "  + category.get("Name").toString();
-      System.out.println(heading);
+      String heading = "Category: "  + category.get("Name").toString();
+      writer.write("<h2>" + heading + "</h2>");
       //recursive process
       formatTopic(categoryArray, 2);
     }
@@ -86,24 +91,22 @@ public class Processor {
   /**
   * Prints the text key of topic object.
   *
-  * @param topic the object being formatted for printing
+  * @param topic the object being formatted for printing to html
   * @param indent the number of indents text should have
   * @throws JsonParsingException in event the json is invalid
   */
   private void printText(JsonObject topic, int indent) {
-    //for adding the correct tabulature
-    String tab = "";
-    if (indent == 1) {
-      tab = "  - ";
-    }
-    else if (indent == 2) {
-      tab = "    - ";
-    }
+
     //checks if the object contains text
+    String url = topic.get("FirstURL").toString();
     if (topic.containsKey("Text")) {
+      writer.write("<h3>Result:</h3>");
       String result = topic.get("Text").toString();
-      String output = tab + result;
-      System.out.println(output);
+      writer.write("<a href='" + url + "'><h4>" + result + "</h4></a>");
+      if (topic.containsKey("Icon")) {
+        JsonObject icon = (JsonObject) topic.get("Icon");
+        writer.write("<img src='" + icon.get("URL") + "'>");
+      }
     }
   }
 }

@@ -2,9 +2,9 @@ import java.io.IOException;
 import javax.json.stream.JsonParsingException;
 
 /**
-* Interacts with DuckDuckGo Api and formats output.
+* Interacts with Wikipedia Api and formats output.
 */
-public class DuckDuckGo {
+public class Wikipedia {
 
   /**
   * Executes the program.
@@ -13,8 +13,8 @@ public class DuckDuckGo {
   */
   public static void main(String[] args) {
 
-    DuckDuckGo duckDuckGo = new DuckDuckGo();
-    duckDuckGo.run(args);
+    Wikipedia wikipedia = new Wikipedia();
+    wikipedia.run(args);
   }
 
   /**
@@ -49,9 +49,9 @@ public class DuckDuckGo {
   * @return query url
   */
   public String createURL(String searchParameter) {
-    final String head = "https://api.duckduckgo.com/?q=";
-    final String footer = "&format=json";
-    final String url = head + "'" + searchParameter + "'" + footer;
+    final String head = "https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=";
+    //replaces all the spaces with the designated space operand for api
+    final String url = head + searchParameter.replaceAll("\\s", "%20");
     return url;
   }
 }

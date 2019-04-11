@@ -2,7 +2,7 @@ import java.io.IOException;
 import javax.json.stream.JsonParsingException;
 
 /**
-* Interacts with DuckDuckGo Api and formats output.
+* Interacts with DuckDUckGo Api and formats output.
 */
 public class DuckDuckGo {
 
