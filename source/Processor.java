@@ -39,7 +39,7 @@ public class Processor {
   public void format() throws JsonParsingException {
     JsonObject mainObject = reader.readObject();
     String heading = mainObject.get("Heading").toString();
-    if (heading.isEmpty()) clear{
+    if (heading.isEmpty()) {
       System.out.println("No Search Results Found");
     }
     else {
