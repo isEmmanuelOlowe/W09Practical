@@ -129,11 +129,11 @@ java -cp "javax.json-1.0.jar:." DuckDuckGo "Terminator Broken"
 
 #### API Output
 
-![](tests/source/broken api.png)
+![](tests/source_tests/broken api.png)
 
 #### Program Output
 
-![](tests/source/broken.png)
+![](tests/source_tests/broken.png)
 
 
 
